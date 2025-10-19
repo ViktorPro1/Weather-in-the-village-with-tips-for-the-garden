@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Погода в Яромирці та Завадинцях — Свіжий прогноз</title>
+    <meta name="description"
+        content="Актуальний прогноз погоди на сьогодні і на 3 дні для сіл Яромирка та Завадинці. Температура, опади, вітер, хмарність, видимість. Рекомендації по городині." />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://pohoda-v-yaromyrtsi-ta-zavadyntsyakh.netlify.app/" />
+    <meta property="og:title" content="Погода в Яромирці та Завадинцях — Свіжий прогноз" />
+    <meta property="og:description"
+        content="Актуальний прогноз погоди на сьогодні і на 3 дні для сіл Яромирка та Завадинці. Температура, опади, вітер, хмарність, видимість. Рекомендації по городині." />
+    <meta property="og:image" content="https://pohoda-v-yaromyrtsi-ta-zavadyntsyakh.netlify.app/pogoda.jpg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://pohoda-v-yaromyrtsi-ta-zavadyntsyakh.netlify.app/" />
+    <meta name="twitter:title" content="Погода в Яромирці та Завадинцях — Свіжий прогноз" />
+    <meta name="twitter:description"
+        content="Актуальний прогноз погоди на сьогодні і на 3 дні для сіл Яромирка та Завадинці. Температура, опади, вітер, хмарність, видимість. Рекомендації по городині." />
+    <meta name="twitter:image" content="https://pohoda-v-yaromyrtsi-ta-zavadyntsyakh.netlify.app/pogoda.jpg" />
+
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#2196f3" />
+    <link rel="icon" type="image/png" href="icon-192.png" />
+
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            background: #eef2f3;
+            margin: 0;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        /* Кнопки */
+        .btn {
+            padding: 10px 20px;
+            margin: 10px 5px;
+            background: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 200px;
+            display: inline-block;
+            text-align: center;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            background: #05572e;
+        }
+
+        /* Контейнер погоди */
+        .weather-box {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            word-wrap: break-word;
+        }
+
+        /* Іконки прогнозу */
+        .icon {
+            width: 50px;
+            height: 50px;
+            vertical-align: middle;
+        }
+
+        /* День прогнозу */
+        .forecast-day {
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+
+        /* Фото села */
+        .village-photo {
+            display: block;
+            margin: 10px auto 15px auto;
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Рекомендації */
+        .recommendations {
+            margin-top: 20px;
+            background: #d9f0d9;
+            border-left: 6px solid #4caf50;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: #2e5d2e;
+        }
+
+        /* Фото для окремого блоку погоди (.responsive-photo) */
+        .responsive-photo {
+            width: auto;
+            max-width: 500px;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        /* Адаптивність для мобільних */
+        @media (max-width: 420px) {
+            body {
+                padding: 10px;
+                background: #f0e6f6;
+                /* інший фон */
+                text-align: left;
+                /* вирівнювання по лівому краю */
+            }
+
+            h1 {
+                font-size: 1.5rem;
+                color: #4b0082;
+                /* інший колір заголовка */
+            }
+
+            .btn {
+                padding: 12px;
+                font-size: 1rem;
+                width: 100%;
+                margin: 10px 0;
+                background: #029e50;
+                /* інший колір кнопки */
+                color: black;
+                /* колір тексту */
+            }
+
+            .icon {
+                width: 60px;
+                height: 60px;
+            }
+
+            .village-photo {
+                max-width: 80%;
+                border-radius: 12px;
+                box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+            }
+
+            .responsive-photo {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .weather-box {
+                padding: 15px;
+                background: #fff0f5;
+                /* інший фон */
+                box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+            }
+
+            .forecast-day {
+                font-size: 1rem;
+                border-top: 2px solid #a29bfe;
+                /* інша рамка */
+                padding-top: 12px;
+            }
+
+            .recommendations {
+                background: #fff4e6;
+                border-left: 6px solid #ff9800;
+                font-size: 1rem;
+                line-height: 1.5;
+                color: #bf360c;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1>🌤️ Погода сьогодні</h1>
+
+    <div style="text-align:center; margin: 20px 0;">
+        <img src="pogoda.jpg" alt="Погода" class="responsive-photo" />
+    </div>
+
+    <button class="btn" onclick="toggleWeather(49.7999, 24.0169, 'weatherYaromyrka', 'Яромирка')">Погода в
+        Яромирці</button>
+    <button class="btn" onclick="toggleWeather(49.8299, 24.0202, 'weatherZavadyntsi', 'Завадинці')">Погода в
+        Завадинцях</button>
+
+    <div id="weatherYaromyrka" class="weather-box">
+        <img src="jaromirka.jpg" alt="Яромирка" class="village-photo" />
+    </div>
+
+    <div id="weatherZavadyntsi" class="weather-box">
+        <img src="zavadyntsi.jpg" alt="Завадинці" class="village-photo" />
+    </div>
+
+    <script>
+        const API_KEY = "0e79c6751c05bd3d4a8a2c48a9d5172b";
+        const weatherCache = {};
+
+        function getRecommendations(description, minTemp, maxTemp, hasGreenhouse = false) {
+            const lowerDesc = description.toLowerCase();
+            const month = new Date().getMonth();
+            let tips = [];
+
+            // --- Загальні погодні умови ---
+            if (lowerDesc.includes("дощ")) {
+                tips.push("💧 Опади — накрийте овочі, зелень та інвентар, щоб уникнути загнивання.");
+            }
+            if (maxTemp < 5) {
+                tips.push("❄️ Дуже холодно — у відкритому ґрунті посадки не рекомендуються.");
+            }
+            if (maxTemp > 30) {
+                tips.push("🔥 Спека — поливати овочі та зелень рано вранці або пізно ввечері, замульчувати ґрунт.");
+            }
+
+            // --- Зима (грудень-лютий) ---
+            if (month === 11 || month <= 1) {
+                tips.push("🌳 Сад: перевірка укриття молодих дерев, обрізка сухих гілок, обробка від гризунів, захист штамбів від сонячних опіків.");
+                tips.push("🏡 Подвір’я: прибрати сніг з доріжок, перевірити водостоки та дах, утеплити комунікації.");
+                tips.push("🌱 Город: відкритий ґрунт зазвичай не обробляють; можна планувати наступний сезон, підготувати добрива та насіння.");
+                if (hasGreenhouse) {
+                    if (maxTemp > 15) {
+                        tips.push("🌱 Теплиця з опаленням: висівати огірки, помідори, перець, баклажани; контролювати вологість, досвітку та температуру.");
+                    } else if (maxTemp > 8 && maxTemp <= 15) {
+                        tips.push("🌱 Теплиця з мінімальним опаленням: пекінська капуста, шпинат, пак-чой, петрушка; мульчування та захист від протягів.");
+                    } else if (maxTemp > 0 && maxTemp <= 8) {
+                        tips.push("🌱 Неопалювана теплиця: редиска, салати, цибуля на перо, шпинат; укриття нетканим матеріалом.");
+                    } else {
+                        tips.push("🌱 Дуже холодно навіть у теплиці — посадки краще не проводити, додаткове утеплення.");
+                    }
+                }
+            }
+
+            // --- Весна (березень-травень) ---
+            if (month >= 2 && month <= 4) {
+                tips.push("🌱 Город: садити картоплю, моркву, цибулю, буряк; підживлювати розсаду, проріджувати посіви.");
+                tips.push("🌱 Теплиця: висівати помідори, перець, огірки на розсаду; проріджування та підживлення молодої зелені; провітрювання при сонячній погоді.");
+                tips.push("🌳 Сад: весняна обрізка плодових дерев, обробка від шкідників, підготовка дерев до цвітіння, мульчування прикореневої зони.");
+                tips.push("🏡 Подвір’я: прибирання сухого листя та сміття, підготовка грядок, розпушування ґрунту, підживлення добривами.");
+            }
+
+            // --- Літо (червень-серпень) ---
+            if (month >= 5 && month <= 7) {
+                tips.push("🌱 Город: прополювання, регулярний полив овочів та зелені, підживлення, збір ранніх овочів (огірки, редис, салати).");
+                tips.push("🌱 Теплиця: контролювати температуру і провітрювання, своєчасно поливати та підживлювати овочі та зелень, збирати урожай по мірі дозрівання.");
+                tips.push("🌳 Сад: збір ягід та фруктів, полив плодових дерев, підживлення, профілактика хвороб та шкідників, обрізка слабких гілок.");
+                tips.push("🏡 Подвір’я: полив грядок, догляд за газоном, боротьба з бур’янами, підтримка чистоти на доріжках та біля будівель.");
+            }
+
+            // --- Осінь (вересень-листопад) ---
+            if (month >= 8 && month <= 10) {
+                tips.push("🌱 Город: збирати врожай картоплі, буряка, моркви; висівати озимий часник та зелень; підготовка ґрунту до зими.");
+                tips.push("🌱 Теплиця: очищення після літніх культур, висаджування озимого часнику, шпинату та салатної зелені; мульчування ґрунту.");
+                tips.push("🌳 Сад: збір плодів, прибирання падалиці, обрізка плодових дерев, підготовка до зимового зберігання, внесення компосту та добрив.");
+                tips.push("🏡 Подвір’я: прибирання опалого листя, підготовка клумб до зими, захист від морозу ніжних рослин, утеплення водопроводу та ємностей для води.");
+            }
+
+            if (tips.length === 0) {
+                tips.push("Рекомендації відсутні. Слідкуйте за прогнозом і станом ґрунту.");
+            }
+
+            return tips.join("<br/>");
+        }
+
+        function toggleWeather(lat, lon, elementId, locationName, hasGreenhouse = false) {
+            const el = document.getElementById(elementId);
+
+            if (el.style.display === "block") {
+                el.style.display = "none";
+                return;
+            }
+
+            if (weatherCache[elementId]) {
+                el.style.display = "block";
+                el.innerHTML = weatherCache[elementId];
+                return;
+            }
+
+            getWeather(lat, lon, elementId, locationName, hasGreenhouse);
+        }
+
+        function getWeather(lat, lon, elementId, locationName, hasGreenhouse = false) {
+            const currentUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=ua`;
+            const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=ua`;
+
+            Promise.all([
+                fetch(currentUrl).then(res => res.json()),
+                fetch(forecastUrl).then(res => res.json())
+            ])
+                .then(([currentData, forecastData]) => {
+                    if (currentData.cod !== 200) throw new Error(currentData.message || "Помилка отримання поточної погоди");
+                    if (forecastData.cod !== "200") throw new Error(forecastData.message || "Помилка отримання прогнозу");
+
+                    const temp = currentData.main.temp;
+                    const feelsLike = currentData.main.feels_like;
+                    const description = currentData.weather[0].description;
+                    const icon = currentData.weather[0].icon;
+                    const windSpeed = currentData.wind.speed;
+                    const windDeg = currentData.wind.deg;
+                    const humidity = currentData.main.humidity;
+                    const pressure = currentData.main.pressure;
+                    const cloudiness = currentData.clouds.all;
+                    const visibility = (currentData.visibility / 1000).toFixed(1);
+                    const sunrise = new Date(currentData.sys.sunrise * 1000).toLocaleTimeString('uk-UA');
+                    const sunset = new Date(currentData.sys.sunset * 1000).toLocaleTimeString('uk-UA');
+
+                    const directions = ["Пн", "Пн-Сх", "Сх", "Пд-Сх", "Пд", "Пд-Зх", "Зх", "Пн-Зх"];
+                    const windDir = directions[Math.round(windDeg / 45) % 8];
+
+                    const days = {};
+                    forecastData.list.forEach(item => {
+                        const date = item.dt_txt.split(' ')[0];
+                        if (!days[date]) days[date] = [];
+                        days[date].push(item);
+                    });
+
+                    let forecastHtml = '';
+                    const dates = Object.keys(days).slice(0, 3);
+                    dates.forEach(date => {
+                        const dayData = days[date];
+                        const temps = dayData.map(d => d.main.temp);
+                        const minTemp = Math.min(...temps);
+                        const maxTemp = Math.max(...temps);
+                        const descriptions = dayData.map(d => d.weather[0].description);
+                        const descriptionDay = descriptions[0];
+                        const iconDay = dayData[0].weather[0].icon;
+
+                        forecastHtml += `
+                <div class="forecast-day">
+                    <strong>${new Date(date).toLocaleDateString('uk-UA', { weekday: 'long', day: 'numeric', month: 'long' })}</strong><br/>
+                    <img class="icon" src="https://openweathermap.org/img/wn/${iconDay}@2x.png" alt="${descriptionDay}">
+                    <br/>
+                    ${descriptionDay}, ${minTemp.toFixed(1)}°C / ${maxTemp.toFixed(1)}°C
+                </div>
+            `;
+                    });
+
+                    const el = document.getElementById(elementId);
+                    const photoHTML = el.querySelector('img').outerHTML;
+
+                    const firstDayDesc = days[dates[0]][0].weather[0].description;
+                    const firstDayTemps = days[dates[0]].map(d => d.main.temp);
+                    const minT = Math.min(...firstDayTemps);
+                    const maxT = Math.max(...firstDayTemps);
+                    const rec = getRecommendations(firstDayDesc, minT, maxT, hasGreenhouse);
+
+                    const content = photoHTML + `
+            <h3>📍 ${locationName}</h3>
+            <p><img class="icon" src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description}"> <strong>${description}</strong></p>
+            <p>🌡️ Температура: ${temp.toFixed(1)} °C (відчувається як ${feelsLike.toFixed(1)} °C)</p>
+            <p>💨 Вітер: ${windSpeed} м/с, напрямок: ${windDir}</p>
+            <p>💧 Вологість: ${humidity}%</p>
+            <p>🔽 Тиск: ${pressure} гПа</p>
+            <p>☁️ Хмарність: ${cloudiness}%</p>
+            <p>👁️ Видимість: ${visibility} км</p>
+            <p>🌞 Схід сонця: ${sunrise}, Захід сонця: ${sunset}</p>
+            <p><strong>Прогноз на 3 дні:</strong>${forecastHtml}</p>
+            <div class="recommendations">
+                <strong>Рекомендації по господарству:</strong><br/>${rec}
+            </div>
+        `;
+
+                    el.style.display = "block";
+                    el.innerHTML = content;
+                    weatherCache[elementId] = content;
+                })
+                .catch(error => {
+                    const el = document.getElementById(elementId);
+                    el.style.display = "block";
+                    el.innerHTML = "<p>Помилка при отриманні погоди 🛑</p>";
+                    console.error(error);
+                });
+        }
+    </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(() => console.log('Service Worker зареєстровано'))
+                .catch(err => console.error('Помилка реєстрації Service Worker:', err));
+        }
+    </script>
+</body>
+
+</html>

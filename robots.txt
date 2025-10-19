@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://pohoda-v-yaromyrtsi-ta-zavadyntsyakh.netlify.app/sitemap.xml
